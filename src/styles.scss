@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+/* src/styles.scss */
+
+
+
+// Resaon :  Modern web browsers HTML body tag par default 8px ka margin apply karte hain.
+/* Browser ke default margins aur paddings reset karein */
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden; /* Horizontal scrollbar aane se rokega */
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}

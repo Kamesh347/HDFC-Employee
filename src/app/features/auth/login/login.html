@@ -1,0 +1,181 @@
+<div class="split-login-container">
+
+    <!-- Left Section: Hero Graphic & Branding -->
+    <div class="hero-section">
+
+        <!-- Top Branding -->
+        <div class="brand-header">
+            <div class="logo-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+            </div>
+            <div>
+                <h1 class="brand-title">HDFC Employee</h1>
+                <p class="brand-subtitle">FINANCE PORTAL</p>
+            </div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <h2 class="hero-heading">
+                Your personal <br />
+                <span class="highlight-red">finance hub.</span>
+            </h2>
+            <p class="hero-description">
+                Manage your income, expenses and financial activity in one place. Built for HDFC employees.
+            </p>
+
+            <!-- Financial Chart Visual -->
+            <div class="chart-container">
+
+                <!-- Floating Tooltips -->
+                <div class="chart-badge income-badge">
+                    <span class="badge-label">Monthly Income</span>
+                    <span class="badge-value">₹85,000</span>
+                </div>
+
+                <div class="chart-badge savings-badge">
+                    <span class="badge-label">Net Savings</span>
+                    <span class="badge-value">₹1,24,500</span>
+                </div>
+
+                <!-- Bar Graph Graphic -->
+                <div class="bar-chart">
+                    <div class="bar" style="height: 35%;"></div>
+                    <div class="bar" style="height: 48%;"></div>
+                    <div class="bar" style="height: 60%;"></div>
+                    <div class="bar" style="height: 52%;"></div>
+                    <div class="bar" style="height: 72%;"></div>
+                    <div class="bar" style="height: 85%;"></div>
+                    <div class="bar active-bar" style="height: 100%;"></div>
+                </div>
+
+                <!-- Overlay Trend Line -->
+                <svg class="trend-line" viewBox="0 0 300 120" preserveAspectRatio="none">
+                    <path d="M 10 90 L 50 75 L 90 55 L 135 68 L 180 35 L 225 20 L 275 8" fill="none" stroke="#ffffff"
+                        stroke-width="2.5" />
+                    <circle cx="10" cy="90" r="4" fill="#ffffff" />
+                    <circle cx="50" cy="75" r="4" fill="#ffffff" />
+                    <circle cx="90" cy="55" r="4" fill="#ffffff" />
+                    <circle cx="135" cy="68" r="4" fill="#ffffff" />
+                    <circle cx="180" cy="35" r="4" fill="#ffffff" />
+                    <circle cx="225" cy="20" r="4" fill="#ffffff" />
+                    <circle cx="275" cy="8" r="5" fill="#ffffff" />
+                </svg>
+
+            </div>
+        </div>
+
+        <!-- Bottom Feature Pills -->
+        <div class="feature-footer">
+            <div class="feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+                <span>TRACK INCOME</span>
+            </div>
+            <div class="feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                <span>MONITOR SPEND</span>
+            </div>
+            <div class="feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                </svg>
+                <span>VIEW REPORTS</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Right Section: Login Form Panel -->
+    <div class="form-section">
+
+        <div class="form-wrapper">
+
+            <!-- Welcome Header -->
+            <div class="welcome-header">
+                <h2>Welcome back</h2>
+                <p>Sign in to access your finance dashboard.</p>
+            </div>
+
+            <!-- Error Message -->
+            @if (errorMessage()) {
+            <div class="alert-error">
+                {{ errorMessage() }}
+            </div>
+            }
+
+            <!-- Form -->
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+
+                <div class="form-group">
+                    <label>Email or Employee ID</label>
+                    <input type="text" formControlName="emailOrEmpId" class="form-input"
+                        placeholder="name@hdfc.com or EMP001" />
+                </div>
+
+                <div class="form-group">
+                    <div class="label-row">
+                        <label>Password</label>
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+                    <div class="input-relative">
+                        <input [type]="showPassword() ? 'text' : 'password'" formControlName="password"
+                            placeholder="Enter your password" class="form-input pr-10" />
+                        <button type="button" (click)="togglePasswordVisibility()" class="toggle-password">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                @if (showPassword()) {
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13.875 18.825A10.05 10.05 0 0112 19c-7 0-10-7-10-7a17.9 17.9 0 012.172-2.828m3.828-2.828A9.972 9.972 0 0112 5c7 0 10 7 10 7a18.254 18.254 0 01-1.658 2.343M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                } @else {
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                }
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="rememberMe" formControlName="rememberMe" />
+                    <label for="rememberMe">Keep me signed in for 30 days</label>
+                </div>
+
+                <button type="submit" [disabled]="loginForm.invalid || isLoading()" class="btn-submit">
+                    @if (isLoading()) {
+                    <span>Signing in...</span>
+                    } @else {
+                    <span>Sign In</span>
+                    }
+                </button>
+
+            </form>
+
+            <!-- Demo Credentials -->
+            <div class="demo-credentials">
+                <div class="demo-title">Demo credentials</div>
+                <div>ID: <span class="code">emp001</span> . Password: <span class="code">password</span></div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="form-footer">
+            © 2026 HDFC Bank Ltd. All rights reserved. For authorised employees only.
+        </footer>
+
+
+    </div>
+
+</div>

@@ -1,0 +1,76 @@
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+.input-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.375rem;
+}
+
+.required-asterisk {
+  color: #ef4444;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #111827;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  outline: none;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+}
+
+.form-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Error State */
+.has-error .form-input {
+  border-color: #ef4444;
+}
+
+.has-error .form-input:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.input-footer {
+  margin-top: 0.375rem;
+  min-height: 1.25rem;
+  font-size: 0.75rem;
+}
+
+.error-message {
+  color: #ef4444;
+}
+
+.helper-text {
+  color: #6b7280;
+}
+
+/* Disabled State */
+.is-disabled .form-input {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}

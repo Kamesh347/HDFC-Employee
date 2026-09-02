@@ -1,0 +1,30 @@
+<div class="add-expense-container">
+
+  <!-- Breadcrumb & Header -->
+  <div class="page-header">
+    <div class="breadcrumb">
+      <span>Expenses</span> / <span class="active">Add Expense</span>
+    </div>
+    <h1 class="page-title">Add Expense</h1>
+  </div>
+
+  <!-- Form Card Container -->
+  <div class="card form-card">
+
+
+    <app-input label="Vendor / Expense Source" placeholder="e.g., Landlord, Supermarket, Utility Provider" type="text"
+      helperText="Vendor or expense source is required." formControlName="vendorName"></app-input>
+
+
+    <!-- <app-input label="Expense Category" placeholder="Enter your Eamil" type="email"
+      helperText="we will never share your eamil" formControlName="category"></app-input> -->
+
+    <app-input label="Eamil Address" placeholder="Enter your Eamil" type="email"
+      helperText="we will never share your eamil" formControlName="email"></app-input>
+
+    <app-select-component label="Expense Category " placeholder="Select the category" helperText="It not be null "
+      formControlName="selectedCategory"></app-select-component>
+
+  </div>
+
+</div>

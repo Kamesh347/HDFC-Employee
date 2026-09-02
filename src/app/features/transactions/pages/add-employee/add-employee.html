@@ -1,0 +1,145 @@
+<div class="add-employee-container">
+
+    <!-- Header & Breadcrumbs Section -->
+    <div class="header-row">
+        <div class="header-title-box">
+            <div class="breadcrumb">
+                <span>Employees</span> / <span class="active">Add Employee</span>
+            </div>
+            <h1 class="page-title">Add Employee</h1>
+        </div>
+
+        <!-- Success Toast Notification -->
+        <!-- @if (showSuccessBanner()) {
+        <div class="success-banner">
+            <span class="icon-check">✓</span>
+            <span class="banner-text">Employee created successfully.</span>
+            <button type="button" class="close-btn" (click)="dismissBanner()">×</button>
+        </div>
+        } -->
+    </div>
+
+    <!-- Main Form Card -->
+    <div class="card form-card">
+        <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="employee-form">
+
+            <div class="form-grid">
+
+                <!-- Row 1: Employee ID & Employee Name -->
+                <!-- <div class="form-group">
+                    <label>Employee ID</label>
+                    <input type="text" formControlName="employeeId" placeholder="EMP001" class="form-control"
+                        [class.is-invalid]="isFieldInvalid('employeeId')" />
+                    @if (hasError('employeeId', 'required')) {
+                    <span class="error-msg">Employee ID is required.</span>
+                    }
+                </div> -->
+
+                <div class="form-group">
+                    <label>Employee Name</label>
+                    <input type="text" formControlName="employeeName" placeholder="Full Name" class="form-control"
+                        [class.is-invalid]="isFieldInvalid('employeeName')" />
+                    @if (hasError('employeeName', 'required')) {
+                    <span class="error-msg">Employee Name is required.</span>
+                    }
+                </div>
+
+                <!-- Row 2: Email & Phone Number -->
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" formControlName="email" placeholder="name@hdfc.com" class="form-control"
+                        [class.is-invalid]="isFieldInvalid('email')" />
+                    @if (hasError('email', 'email') || hasError('email', 'required')) {
+                    <span class="error-msg">Invalid email format.</span>
+                    }
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <div class="phone-input-wrapper">
+                        <span class="prefix">+91</span>
+                        <input type="text" formControlName="phoneNumber" placeholder="0000000000"
+                            class="form-control pl-12" [class.is-invalid]="isFieldInvalid('phone')" />
+                    </div>
+                    @if (isFieldInvalid('phone')) {
+                    <span class="error-msg">Invalid phone number.</span>
+                    }
+                </div>
+
+                <!-- Row 3: Department & Designation -->
+                <div class="form-group">
+                    <label>Department</label>
+                    <select formControlName="department" class="form-control"
+                        [class.is-invalid]="isFieldInvalid('department')">
+                        <option value="" disabled selected>Select Department...</option>
+                        @for (dept of departments; track dept) {
+                        <option [value]="dept">{{ dept }}</option>
+                        }
+                    </select>
+                    @if (hasError('department', 'required')) {
+                    <span class="error-msg">Department is required.</span>
+                    }
+                </div>
+
+                <div class="form-group">
+                    <label>Designation</label>
+                    <input type="text" formControlName="designation" placeholder="Role Title" class="form-control"
+                        [class.is-invalid]="isFieldInvalid('designation')" />
+                    @if (hasError('designation', 'required')) {
+                    <span class="error-msg">Designation is required.</span>
+                    }
+                </div>
+
+                <!-- Row 4: Date of Joining & Salary -->
+                <div class="form-group">
+                    <label>Date of Joining</label>
+                    <input type="date" formControlName="dateOfJoining" class="form-control"
+                        [class.is-invalid]="isFieldInvalid('dateOfJoining')" />
+                    @if (hasError('dateOfJoining', 'futureDate')) {
+                    <span class="error-msg">Date cannot be in the future.</span>
+                    } @else if (hasError('dateOfJoining', 'required')) {
+                    <span class="error-msg">Date of joining is required.</span>
+                    }
+                </div>
+
+                <div class="form-group">
+                    <label>Salary</label>
+                    <div class="currency-input-wrapper">
+                        <span class="currency-symbol">₹</span>
+                        <input type="number" formControlName="salary" placeholder="0.00" class="form-control pl-8"
+                            [class.is-invalid]="isFieldInvalid('salary')" />
+                    </div>
+                    @if (isFieldInvalid('salary')) {
+                    <span class="error-msg">Salary must be a positive number.</span>
+                    }
+                </div>
+
+            </div>
+
+            <!-- Row 5: Status Radio Selection -->
+            <div class="status-group">
+                <label class="status-label">Status</label>
+                <div class="radio-options">
+                    <label class="radio-item">
+                        <input type="radio" formControlName="employeeStatus" value="ACTIVE" />
+                        <span>Active</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" formControlName="employeeStatus" value="INACTIVE" />
+                        <span>Inactive</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="button" (click)="onCancel()" class="btn btn-cancel">Cancel</button>
+                <button type="submit" [disabled]="isSubmitting()" class="btn btn-submit">
+                    {{ isSubmitting() ? 'Saving...' : 'Save Employee' }}
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+</div>

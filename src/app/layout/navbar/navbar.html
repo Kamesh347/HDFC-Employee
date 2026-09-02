@@ -1,0 +1,31 @@
+<header class="top-navbar">
+    <div class="navbar-left">
+        <span class="portal-tag">INTERNAL EMPLOYEE PORTAL</span>
+    </div>
+
+    <div class="navbar-right">
+        <!-- User Profile Dropdown -->
+        <div class="user-profile" (click)="toggleDropdown()">
+            <div class="avatar-circle">
+                {{ userName().charAt(0) }}
+            </div>
+            <div class="user-details">
+                <span class="user-name">{{ userName() }}</span>
+                <span class="user-id">{{ empId() }}</span>
+            </div>
+            <svg class="dropdown-chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+
+            <!-- Dropdown Menu -->
+            @if (showDropdown()) {
+            <div class="dropdown-menu">
+                <div class="menu-item disabled">Profile Settings</div>
+                <div class="menu-divider"></div>
+                <div class="menu-item logout" (click)="logout()">Sign Out</div>
+            </div>
+            }
+        </div>
+    </div>
+</header>

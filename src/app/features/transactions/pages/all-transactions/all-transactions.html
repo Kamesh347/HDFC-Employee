@@ -1,0 +1,247 @@
+<div class="transactions-container">
+
+    <!-- Header Row -->
+    <div class="page-header">
+        <div class="header-left">
+            <h1 class="page-title">Transactions</h1>
+            <p class="page-subtitle">View and manage all financial transactions.</p>
+        </div>
+        <div class="header-right">
+            <button (click)="exportData()" class="btn-export">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                <span>Export</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Top Metric Cards Grid -->
+    <div class="metrics-grid">
+
+        <!-- Total Transactions -->
+        <div class="metric-card">
+            <div class="card-icon icon-slate">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                </svg>
+            </div>
+            <div class="card-info">
+                <span class="card-label">Total Transactions</span>
+                <span class="card-value">{{ totalTransactionsCount() | number }}</span>
+            </div>
+        </div>
+
+        <!-- Total Income -->
+        <div class="metric-card">
+            <div class="card-icon icon-green">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+            </div>
+            <div class="card-info">
+                <span class="card-label">Total Income</span>
+                <span class="card-value text-green">+₹{{ totalIncomeAmount() | number }}</span>
+            </div>
+        </div>
+
+        <!-- Total Expenses -->
+        <div class="metric-card">
+            <div class="card-icon icon-red">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6" />
+                </svg>
+            </div>
+            <div class="card-info">
+                <span class="card-label">Total Expenses</span>
+                <span class="card-value text-red">-₹{{ totalExpenseAmount() | number }}</span>
+            </div>
+        </div>
+
+        <!-- Net Balance -->
+        <div class="metric-card">
+            <div class="card-icon icon-blue">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 6l9-4 9 4v12l-9 4-9-4V6z" />
+                </svg>
+            </div>
+            <div class="card-info">
+                <span class="card-label">Net Balance</span>
+                <span class="card-value">₹{{ netBalance() | number }}</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Filters Panel -->
+    <div class="filters-panel">
+
+        <div class="filters-top-bar">
+            <a (click)="clearFilters()" class="clear-filters-link">Clear Filters</a>
+        </div>
+
+        <div class="filters-grid">
+
+            <!-- Search Input -->
+            <div class="filter-item search-box">
+                <label>Search</label>
+                <div class="input-relative">
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input type="text" [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)"
+                        placeholder="Search transactions..." class="filter-input pl-8" />
+                </div>
+            </div>
+
+            <!-- Transaction Type -->
+            <div class="filter-item">
+                <label>Transaction Type</label>
+                <select [ngModel]="selectedType()" (ngModelChange)="selectedType.set($event)" class="filter-select">
+                    <option value="All">All</option>
+                    <option value="Income">Income</option>
+                    <option value="Expense">Expense</option>
+                </select>
+            </div>
+
+            <!-- Employee -->
+            <div class="filter-item">
+                <label>Employee</label>
+                <select [ngModel]="selectedEmployee()" (ngModelChange)="selectedEmployee.set($event)"
+                    class="filter-select">
+                    <option value="All Employees">All Employees</option>
+                    <option value="Full Name">Full Name</option>
+                    <option value="EMP ID">EMP ID</option>
+                </select>
+            </div>
+
+            <!-- Category -->
+            <div class="filter-item">
+                <label>Category</label>
+                <select [ngModel]="selectedCategory()" (ngModelChange)="selectedCategory.set($event)"
+                    class="filter-select">
+                    <option value="All Categories">All Categories</option>
+                    <option value="Food">Food</option>
+                    <option value="Salary">Salary</option>
+                    <option value="Utilities">Utilities</option>
+                </select>
+            </div>
+
+            <!-- Date Range -->
+            <div class="filter-item date-range-group">
+                <label>Date Range</label>
+                <div class="date-inputs">
+                    <input type="text" placeholder="start" [ngModel]="startDate()"
+                        (ngModelChange)="startDate.set($event)" class="filter-input date-field" />
+                    <span class="separator">▶</span>
+                    <div class="input-relative">
+                        <input type="text" placeholder="end" [ngModel]="endDate()" (ngModelChange)="endDate.set($event)"
+                            class="filter-input date-field pr-6" />
+                        <svg class="calendar-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Amount Range -->
+            <div class="filter-item amount-range-group">
+                <label>Amount Range</label>
+                <div class="amount-inputs">
+                    <input type="number" placeholder="min" [ngModel]="minAmount()"
+                        (ngModelChange)="minAmount.set($event)" class="filter-input" />
+                    <input type="number" placeholder="max" [ngModel]="maxAmount()"
+                        (ngModelChange)="maxAmount.set($event)" class="filter-input" />
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Transactions Table Card -->
+    <div class="card table-card">
+        <div class="card-title">Transaction Table</div>
+
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Date <span class="sort-icon">⇅</span></th>
+                        <th>Type</th>
+                        <th>Employee <span class="sort-icon">⇅</span></th>
+                        <th>Description <span class="sort-icon">⇅</span></th>
+                        <th>Category <span class="sort-icon">⇅</span></th>
+                        <th>Amount <span class="sort-icon">⇅</span></th>
+                        <th>Payment Method <span class="sort-icon">⇅</span></th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of filteredTransactions(); track item.id) {
+                    <tr>
+                        <td class="text-nowrap">{{ item.date }}</td>
+                        <td>
+                            <span class="badge" [class.badge-income]="item.type === 'Income'"
+                                [class.badge-expense]="item.type === 'Expense'">
+                                {{ item.type }}
+                            </span>
+                        </td>
+                        <td>{{ item.employee }}</td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.category }}</td>
+                        <td [class.amount-income]="item.type === 'Income'"
+                            [class.amount-expense]="item.type === 'Expense'">
+                            {{ item.type === 'Income' ? '+' : '-' }}₹{{ item.amount | number }}
+                        </td>
+                        <td>{{ item.paymentMethod }}</td>
+                        <td class="text-right">
+                            <div class="action-buttons">
+                                <button (click)="onView(item)" class="btn-action view" title="View Details">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                </button>
+                                <button (click)="onEdit(item)" class="btn-action edit" title="Edit">Edit</button>
+                                <button (click)="onDelete(item.id)" class="btn-action delete" title="Delete">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination Footer -->
+        <div class="table-pagination">
+            <button class="btn-page" [disabled]="currentPage() === 1">Previous</button>
+            <div class="page-numbers">
+                <button class="page-num active">1</button>
+                <button class="page-num">2</button>
+                <button class="page-num">3</button>
+            </div>
+            <button class="btn-page">Next</button>
+        </div>
+
+    </div>
+
+</div>

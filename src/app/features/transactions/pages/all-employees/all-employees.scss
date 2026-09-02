@@ -1,0 +1,321 @@
+$hdfc-red: #e31837;
+$bg-slate: #f1f5f9;
+$card-bg: #ffffff;
+$text-dark: #0f172a;
+$text-muted: #64748b;
+$border-color: #cbd5e1;
+$navy-btn: #1e293b;
+
+.employee-list-container {
+  padding: 1.5rem 2rem;
+  background-color: $bg-slate;
+  min-height: calc(100vh - 60px);
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+// Page Header
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+
+  .page-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: $text-dark;
+    margin: 0;
+  }
+
+  .page-subtitle {
+    font-size: 0.8125rem;
+    color: $text-muted;
+    margin-top: 0.25rem;
+  }
+
+  .btn-add-employee {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: $hdfc-red;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(227, 24, 55, 0.2);
+
+    .plus-icon { font-size: 1.125rem; line-height: 1; }
+    &:hover { opacity: 0.9; }
+  }
+}
+
+// Card Container
+.filter-card {
+  background-color: $card-bg;
+  border-radius: 10px;
+  padding: 1.25rem;
+  border: 1px solid #e2e8f0;
+}
+
+// Filters Row Layout
+.filters-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .filter-input, .filter-select {
+      padding: 0.45rem 0.625rem;
+      font-size: 0.8125rem;
+      border: 1px solid $border-color;
+      border-radius: 6px;
+      outline: none;
+      background-color: #ffffff;
+      color: $text-dark;
+    }
+
+    .filter-select {
+      min-width: 160px;
+    }
+
+    .input-relative {
+      position: relative;
+
+      .search-icon {
+        position: absolute;
+        left: 0.625rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 14px;
+        height: 14px;
+        color: #94a3b8;
+      }
+
+      .pl-8 { padding-left: 2rem; }
+    }
+
+    &.search-group {
+      flex: 1;
+      min-width: 220px;
+    }
+  }
+
+  .clear-filters-wrapper {
+    margin-left: auto;
+
+    .clear-filters-link {
+      font-size: 0.75rem;
+      color: #2563eb;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+}
+
+// Table Styling
+.table-responsive {
+  overflow-x: auto;
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+
+    th, td {
+      padding: 0.75rem 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    th {
+      color: #334155;
+      font-weight: 600;
+      background-color: #f8fafc;
+
+      .sort-icon {
+        font-size: 0.75rem;
+        color: #94a3b8;
+        margin-left: 0.25rem;
+      }
+    }
+
+    .font-medium { font-weight: 600; color: $text-dark; }
+
+    .status-pill {
+      display: inline-block;
+      padding: 0.25rem 0.625rem;
+      border-radius: 12px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+
+      &.active {
+        background-color: #dcfce7;
+        color: #15803d;
+      }
+
+      &.inactive {
+        background-color: #fee2e2;
+        color: #b91c1c;
+      }
+    }
+
+    .text-center { text-align: center; }
+
+    // Table Action Icon Buttons
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 0.35rem;
+
+      .btn-action {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        svg { width: 14px; height: 14px; color: #ffffff; }
+
+        &.view, &.edit {
+          background-color: $navy-btn;
+        }
+
+        &.delete {
+          background-color: $hdfc-red;
+        }
+
+        &:hover { opacity: 0.85; }
+      }
+    }
+  }
+}
+
+// Table Pagination Controls
+.table-pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+
+  .btn-page {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #334155;
+    cursor: pointer;
+
+    &:disabled { opacity: 0.5; cursor: not-allowed; }
+  }
+
+  .page-numbers {
+    display: flex;
+    gap: 0.25rem;
+
+    .page-num {
+      width: 28px;
+      height: 28px;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      background-color: #ffffff;
+      color: #334155;
+      font-size: 0.75rem;
+      cursor: pointer;
+
+      &.active {
+        background-color: #1e293b;
+        color: #ffffff;
+        border-color: #1e293b;
+      }
+    }
+  }
+}
+
+// Confirmation Modal Dialog Overlay
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+
+  .modal-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 1.5rem 1.75rem;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    .modal-body {
+      .modal-text {
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: $text-dark;
+        margin: 0;
+        text-align: center;
+      }
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+
+      .btn-modal {
+        padding: 0.5rem 1.25rem;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        border-radius: 6px;
+        cursor: pointer;
+        border: none;
+
+        &.btn-cancel {
+          background-color: #e2e8f0;
+          color: #334155;
+
+          &:hover { background-color: #cbd5e1; }
+        }
+
+        &.btn-delete {
+          background-color: $hdfc-red;
+          color: #ffffff;
+
+          &:hover:not(:disabled) { opacity: 0.9; }
+          &:disabled { opacity: 0.6; cursor: not-allowed; }
+        }
+      }
+    }
+  }
+}

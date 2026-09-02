@@ -1,0 +1,32 @@
+<div class="select-wrapper" [class.has-error]="errorMessage" [class.is-disabled]="disabled">
+  <!-- Label -->
+  <label *ngIf="label" class="select-label">
+    {{ label }} <span *ngIf="required" class="required-asterisk">*</span>
+  </label>
+
+  <!-- Dropdown Element -->
+  <div class="select-container">
+    <select
+      [disabled]="disabled"
+      [value]="selectedValue"
+      (change)="onSelectionChange($event)"
+      (blur)="onBlur()"
+      class="form-select"
+    >
+      <option value="" disabled selected hidden>{{ placeholder }}</option>
+      <option 
+        *ngFor="let option of options" 
+        [value]="option.value"
+        [disabled]="option.disabled"
+      >
+        {{ option.label }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Helper Text / Validation Error -->
+  <div class="select-footer">
+    <span *ngIf="errorMessage" class="error-message">{{ errorMessage }}</span>
+    <span *ngIf="!errorMessage && helperText" class="helper-text">{{ helperText }}</span>
+  </div>
+</div>

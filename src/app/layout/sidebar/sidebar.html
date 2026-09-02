@@ -1,0 +1,53 @@
+
+<aside class="sidebar">
+  <!-- Brand Section -->
+  <div class="brand-header">
+    <div class="logo-shield">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      </svg>
+    </div>
+    <div class="brand-text">
+      <span class="brand-title">HDFC Employee</span>
+      <span class="brand-sub">FINANCE PORTAL</span>
+    </div>
+  </div>
+
+  <!-- Navigation Items -->
+  <!-- <nav class="nav-menu">
+    @for (item of navItems; track item.link) {
+      <a [routerLink]="item.link" routerLinkActive="active" class="nav-item">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="item.icon" />
+        </svg>
+        <span>{{ item.label }}</span>
+      </a>
+    }
+  </nav> -->
+<nav class="nav-menu">
+  @for (item of navItems; track item.link) {
+    <a [routerLink]="item.link" 
+       routerLinkActive="active" 
+     
+       [routerLinkActiveOptions]="item.link === '/main-layout/dashboard' ? { exact: true } : { exact: false }"
+       class="nav-item">
+      
+      <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="item.icon" />
+      </svg>
+      <span>{{ item.label }}</span>
+    </a>
+  }
+
+</nav>
+
+  <!-- Sidebar Footer -->
+  <div class="sidebar-footer">
+    <a routerLink="/reports" routerLinkActive="active" class="reports-badge">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+      </svg>
+      <span>VIEW REPORTS</span>
+    </a>
+  </div>
+</aside>

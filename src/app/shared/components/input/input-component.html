@@ -1,0 +1,18 @@
+<div class="input-wrapper" [class.has-error]="errorMessage" [class.is-disabled]="disabled">
+    <!-- Label -->
+    <label *ngIf="label" class="input-label">
+        {{ label }} <span *ngIf="required" class="required-asterisk">*</span>
+    </label>
+
+    <!-- Input Field -->
+    <div class="input-container">
+        <input [type]="type" [placeholder]="placeholder" [disabled]="disabled" [value]="value" (input)="onInput($event)"
+            (blur)="onBlur()" class="form-input" />
+    </div>
+
+    <!-- Helper Text / Error Message -->
+    <div class="input-footer">
+        <span *ngIf="errorMessage" class="error-message">{{ errorMessage }}</span>
+        <span *ngIf="!errorMessage && helperText" class="helper-text">{{ helperText }}</span>
+    </div>
+</div>
