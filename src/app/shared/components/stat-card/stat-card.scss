@@ -1,0 +1,107 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+  height: 100%;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+}
+
+.dashboard-card {
+  justify-content: space-between;
+  padding: 1.1rem 1.25rem;
+  border-radius: 8px;
+  color: #ffffff;
+  background: #101d3f;
+  border-color: transparent;
+}
+
+.summary-card {
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+}
+
+.stat-icon {
+  display: grid;
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 50%;
+  color: #64748b;
+  background: #f1f5f9;
+}
+
+.stat-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-label {
+  color: #64748b;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.stat-value {
+  color: #0f172a;
+  font-size: 1.25rem;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.dashboard-card .stat-value {
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+.dashboard-card .stat-label {
+  color: #94a3b8;
+}
+
+.stat-icon ::ng-deep svg {
+  width: 20px;
+  height: 20px;
+}
+
+.tone-positive .stat-icon {
+  color: #16a34a;
+  background: #dcfce7;
+}
+
+.dashboard-card .stat-icon {
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dashboard-card.tone-positive .stat-icon,
+.dashboard-card.tone-negative .stat-icon,
+.dashboard-card.tone-accent .stat-icon,
+.dashboard-card.tone-neutral .stat-icon {
+  color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.tone-negative .stat-icon {
+  color: #dc2626;
+  background: #fee2e2;
+}
+
+.tone-accent .stat-icon {
+  color: #0284c7;
+  background: #e0f2fe;
+}
+
+.tone-neutral .stat-icon {
+  color: #64748b;
+  background: #f1f5f9;
+}

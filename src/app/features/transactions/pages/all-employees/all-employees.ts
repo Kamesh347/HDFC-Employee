@@ -10,6 +10,15 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../../core/services/api-service';
+import {
+  SelectComponent,
+  SelectOption,
+} from '../../../../shared/components/select-component/select-component';
+import { PageHeader } from '../../../../shared/components/page-header/page-header';
+import { ConfirmDialog } from '../../../../shared/components/confirm-dialog/confirm-dialog';
+import { SearchField } from '../../../../shared/components/search-field/search-field';
+import { StatusBadge } from '../../../../shared/components/status-badge/status-badge';
+import { Pagination } from '../../../../shared/components/pagination/pagination';
 
 export interface Employee {
   id: string;
@@ -23,7 +32,16 @@ export interface Employee {
 
 @Component({
   selector: 'app-all-employees',
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    SelectComponent,
+    PageHeader,
+    ConfirmDialog,
+    SearchField,
+    StatusBadge,
+    Pagination,
+  ],
   templateUrl: './all-employees.html',
   styleUrl: './all-employees.scss',
 })
@@ -37,6 +55,23 @@ export class AllEmployees implements OnInit {
   selectedEmpIdFilter = signal<string>('All');
   selectedDepartmentFilter = signal<string>('All');
   selectedStatusFilter = signal<string>('All');
+  employeeIdFilterOptions: SelectOption[] = [
+    { value: 'All', label: 'Employee ID filter' },
+    { value: 'EMP001', label: 'EMP001' },
+    { value: 'EMP002', label: 'EMP002' },
+    { value: 'EMP003', label: 'EMP003' },
+  ];
+  departmentFilterOptions: SelectOption[] = [
+    { value: 'All', label: 'IT, HR, Operations' },
+    { value: 'IT', label: 'IT' },
+    { value: 'HR', label: 'HR' },
+    { value: 'Operations', label: 'Operations' },
+  ];
+  statusFilterOptions: SelectOption[] = [
+    { value: 'All', label: 'Active, Inactive' },
+    { value: 'Active', label: 'Active' },
+    { value: 'Inactive', label: 'Inactive' },
+  ];
 
   // Delete Modal & Loading Signals
   showDeleteModal = signal<boolean>(false);
@@ -45,6 +80,7 @@ export class AllEmployees implements OnInit {
 
   // Pagination Signals
   currentPage = signal<number>(1);
+  pageSize = signal<number>(10);
 
   // Employees Raw Data
   employees = signal<Employee[]>([]);
@@ -140,6 +176,20 @@ export class AllEmployees implements OnInit {
     );
   });
 
+  paginatedEmployees = computed<Employee[]>(() => {
+    const start = (this.currentPage() - 1) * this.pageSize();
+    return this.filteredEmployees().slice(start, start + this.pageSize());
+  });
+
+  updateSearch(query: string): void {
+    this.searchQuery.set(query);
+    this.currentPage.set(1);
+  }
+
+  updatePage(page: number): void {
+    this.currentPage.set(page);
+  }
+
   navigateToAddEmployee(): void {
     console.log('Navigating to Add Employee page...');
     this.router.navigate(['main-layout/add-employee']);
@@ -150,6 +200,7 @@ export class AllEmployees implements OnInit {
     this.selectedEmpIdFilter.set('All');
     this.selectedDepartmentFilter.set('All');
     this.selectedStatusFilter.set('All');
+    this.currentPage.set(1);
   }
 
   onView(emp: Employee): void {

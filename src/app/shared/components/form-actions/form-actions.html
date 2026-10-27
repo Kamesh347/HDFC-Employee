@@ -1,0 +1,8 @@
+<div class="form-actions">
+    <button type="button" class="cancel-button" [disabled]="busy" (click)="cancelled.emit()">
+        {{ cancelLabel }}
+    </button>
+    <button type="submit" class="submit-button" [disabled]="disabled || busy">
+        {{ busy ? busyLabel : submitLabel }}
+    </button>
+</div>

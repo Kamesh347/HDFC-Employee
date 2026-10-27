@@ -1,82 +1,168 @@
 <div class="transactions-container">
 
     <!-- Header Row -->
-    <div class="page-header">
-        <div class="header-left">
-            <h1 class="page-title">Transactions</h1>
-            <p class="page-subtitle">View and manage all financial transactions.</p>
-        </div>
-        <div class="header-right">
-            <button (click)="exportData()" class="btn-export">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-                <span>Export</span>
-            </button>
-        </div>
-    </div>
+    <app-page-header title="Transactions" subtitle="View and manage all financial transactions.">
+        <button headerActions type="button" class="btn-upload-statement" (click)="statementFileInput.click()"
+            [disabled]="isReadingStatement()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                    d="M12 16V4m0 0L7 9m5-5 5 5M5 14v5h14v-5" />
+            </svg>
+            <span>{{ isReadingStatement() ? 'Reading statement...' : 'Upload statement' }}</span>
+        </button>
+        <button headerActions (click)="exportData()" class="btn-export">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <span>Export</span>
+        </button>
+    </app-page-header>
 
     <!-- Top Metric Cards Grid -->
     <div class="metrics-grid">
 
         <!-- Total Transactions -->
-        <div class="metric-card">
-            <div class="card-icon icon-slate">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                </svg>
-            </div>
-            <div class="card-info">
-                <span class="card-label">Total Transactions</span>
-                <span class="card-value">{{ totalTransactionsCount() | number }}</span>
-            </div>
-        </div>
+        <app-stat-card variant="summary" label="Total Transactions" [value]="totalTransactionsCount() | number">
+            <svg statIcon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+            </svg>
+        </app-stat-card>
 
         <!-- Total Income -->
-        <div class="metric-card">
-            <div class="card-icon icon-green">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
-            </div>
-            <div class="card-info">
-                <span class="card-label">Total Income</span>
-                <span class="card-value text-green">+₹{{ totalIncomeAmount() | number }}</span>
-            </div>
-        </div>
+        <app-stat-card variant="summary" label="Total Income" tone="positive"
+            [value]="'+₹' + (totalIncomeAmount() | number)">
+            <svg statIcon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+        </app-stat-card>
 
         <!-- Total Expenses -->
-        <div class="metric-card">
-            <div class="card-icon icon-red">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6" />
-                </svg>
-            </div>
-            <div class="card-info">
-                <span class="card-label">Total Expenses</span>
-                <span class="card-value text-red">-₹{{ totalExpenseAmount() | number }}</span>
-            </div>
-        </div>
+        <app-stat-card variant="summary" label="Total Expenses" tone="negative"
+            [value]="'-₹' + (totalExpenseAmount() | number)">
+            <svg statIcon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6" />
+            </svg>
+        </app-stat-card>
 
         <!-- Net Balance -->
-        <div class="metric-card">
-            <div class="card-icon icon-blue">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M3 6l9-4 9 4v12l-9 4-9-4V6z" />
-                </svg>
+        <app-stat-card variant="summary" label="Net Balance" tone="accent" [value]="'₹' + (netBalance() | number)">
+            <svg statIcon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l9-4 9 4v12l-9 4-9-4V6z" />
+            </svg>
+        </app-stat-card>
+
+    </div>
+
+    <section class="statement-panel" aria-labelledby="statement-title">
+        <input #statementFileInput class="visually-hidden" type="file" accept=".csv,text/csv"
+            (change)="onStatementSelected($event)" />
+        <div class="statement-heading">
+            <div>
+                <span class="section-kicker">STATEMENT REVIEW</span>
+                <h2 id="statement-title">Analyze a bank statement</h2>
+                <p>Upload a CSV to review, rename and categorize transactions before adding them.</p>
             </div>
-            <div class="card-info">
-                <span class="card-label">Net Balance</span>
-                <span class="card-value">₹{{ netBalance() | number }}</span>
+            <button type="button" class="template-link" (click)="downloadStatementTemplate()">
+                Download CSV template
+            </button>
+        </div>
+
+        @if (!statementRows().length) {
+        <button type="button" class="statement-dropzone" (click)="statementFileInput.click()"
+            [disabled]="isReadingStatement()">
+            <span class="upload-mark" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                        d="M12 16V4m0 0L7 9m5-5 5 5M5 14v5h14v-5" />
+                </svg>
+            </span>
+            <span class="dropzone-copy">
+                <strong>{{ isReadingStatement() ? 'Analyzing your statement...' : 'Choose a CSV statement' }}</strong>
+                <span>CSV up to 10 MB · Date, Description, Debit/Credit or Amount columns</span>
+            </span>
+            <span class="browse-label">Browse files</span>
+        </button>
+        } @else {
+        <div class="statement-file-row">
+            <div class="file-details">
+                <span class="file-indicator" aria-hidden="true">CSV</span>
+                <span><strong>{{ statementFileName() }}</strong><small>{{ statementRows().length }} transactions
+                        found</small></span>
+            </div>
+            <button type="button" class="replace-file" (click)="statementFileInput.click()">Replace file</button>
+        </div>
+
+        <div class="statement-summary">
+            <div class="statement-total credit-total"><span>Credits</span><strong>+₹{{ statementCredits() |
+                    number:'1.2-2' }}</strong></div>
+            <div class="statement-total debit-total"><span>Debits</span><strong>-₹{{ statementDebits() | number:'1.2-2'
+                    }}</strong></div>
+            <div class="statement-total net-total"><span>Net movement</span><strong>{{ statementNet() < 0 ? '-' : '+'
+                        }}₹{{ abs(statementNet()) | number:'1.2-2' }}</strong>
             </div>
         </div>
 
-    </div>
+        <div class="review-table-wrap">
+            <table class="review-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Direction</th>
+                        <th>Statement description</th>
+                        <th>Category</th>
+                        <th class="amount-cell">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (row of statementRows(); track row.id) {
+                    <tr>
+                        <td class="date-cell">{{ row.date }}</td>
+                        <td><app-status-badge [label]="row.type"
+                                [tone]="row.type === 'Income' ? 'income' : 'expense'"></app-status-badge></td>
+                        <td>
+                            <input class="review-input description-input" type="text" [value]="row.description"
+                                [attr.aria-label]="'Description for row ' + row.sourceRow"
+                                (input)="updateStatementRow(row.id, 'description', $any($event.target).value)" />
+                            <small class="source-row">Statement row {{ row.sourceRow }}</small>
+                        </td>
+                        <td>
+                            <select class="review-input category-input" [value]="row.category"
+                                [attr.aria-label]="'Category for row ' + row.sourceRow"
+                                (change)="updateStatementRow(row.id, 'category', $any($event.target).value)">
+                                @for (category of statementCategories; track category) {
+                                <option [value]="category">{{ category }}</option>
+                                }
+                            </select>
+                        </td>
+                        <td class="amount-cell" [class.credit-amount]="row.type === 'Income'"
+                            [class.debit-amount]="row.type === 'Expense'">
+                            {{ row.type === 'Income' ? '+' : '-' }}₹{{ row.amount | number:'1.2-2' }}
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="review-footer">
+            <span>Review and correct descriptions or categories before adding.</span>
+            <button type="button" class="commit-statement" (click)="importStatementRows()">
+                Add {{ statementRows().length }} transactions
+            </button>
+        </div>
+        }
+
+        @if (statementError()) {
+        <p class="statement-message error-message" role="alert">{{ statementError() }}</p>
+        }
+        @if (statementImported()) {
+        <p class="statement-message success-message" role="status">Statement transactions added to the table.</p>
+        }
+    </section>
 
     <!-- Filters Panel -->
     <div class="filters-panel">
@@ -89,49 +175,32 @@
 
             <!-- Search Input -->
             <div class="filter-item search-box">
-                <label>Search</label>
-                <div class="input-relative">
-                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                    <input type="text" [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)"
-                        placeholder="Search transactions..." class="filter-input pl-8" />
-                </div>
+                <app-search-field label="Search" placeholder="Search transactions..." [value]="searchQuery()"
+                    (valueChange)="updateSearch($event)"></app-search-field>
             </div>
 
             <!-- Transaction Type -->
             <div class="filter-item">
                 <label>Transaction Type</label>
-                <select [ngModel]="selectedType()" (ngModelChange)="selectedType.set($event)" class="filter-select">
-                    <option value="All">All</option>
-                    <option value="Income">Income</option>
-                    <option value="Expense">Expense</option>
-                </select>
+                <app-select-component placeholder="All" [options]="typeOptions" [ngModel]="selectedType()"
+                    (ngModelChange)="selectedType.set($event)">
+                </app-select-component>
             </div>
 
             <!-- Employee -->
             <div class="filter-item">
                 <label>Employee</label>
-                <select [ngModel]="selectedEmployee()" (ngModelChange)="selectedEmployee.set($event)"
-                    class="filter-select">
-                    <option value="All Employees">All Employees</option>
-                    <option value="Full Name">Full Name</option>
-                    <option value="EMP ID">EMP ID</option>
-                </select>
+                <app-select-component placeholder="All Employees" [options]="employeeOptions"
+                    [ngModel]="selectedEmployee()" (ngModelChange)="selectedEmployee.set($event)">
+                </app-select-component>
             </div>
 
             <!-- Category -->
             <div class="filter-item">
                 <label>Category</label>
-                <select [ngModel]="selectedCategory()" (ngModelChange)="selectedCategory.set($event)"
-                    class="filter-select">
-                    <option value="All Categories">All Categories</option>
-                    <option value="Food">Food</option>
-                    <option value="Salary">Salary</option>
-                    <option value="Utilities">Utilities</option>
-                </select>
+                <app-select-component placeholder="All Categories" [options]="categoryOptions"
+                    [ngModel]="selectedCategory()" (ngModelChange)="selectedCategory.set($event)">
+                </app-select-component>
             </div>
 
             <!-- Date Range -->
@@ -187,14 +256,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for (item of filteredTransactions(); track item.id) {
+                    @for (item of paginatedTransactions(); track item.id) {
                     <tr>
                         <td class="text-nowrap">{{ item.date }}</td>
                         <td>
-                            <span class="badge" [class.badge-income]="item.type === 'Income'"
-                                [class.badge-expense]="item.type === 'Expense'">
-                                {{ item.type }}
-                            </span>
+                            <app-status-badge [label]="item.type"
+                                [tone]="item.type === 'Income' ? 'income' : 'expense'"></app-status-badge>
                         </td>
                         <td>{{ item.employee }}</td>
                         <td>{{ item.description }}</td>
@@ -232,15 +299,8 @@
         </div>
 
         <!-- Pagination Footer -->
-        <div class="table-pagination">
-            <button class="btn-page" [disabled]="currentPage() === 1">Previous</button>
-            <div class="page-numbers">
-                <button class="page-num active">1</button>
-                <button class="page-num">2</button>
-                <button class="page-num">3</button>
-            </div>
-            <button class="btn-page">Next</button>
-        </div>
+        <app-pagination [currentPage]="currentPage()" [totalItems]="filteredTransactions().length"
+            [pageSize]="pageSize()" (pageChange)="updatePage($event)"></app-pagination>
 
     </div>
 

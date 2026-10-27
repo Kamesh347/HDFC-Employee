@@ -1,0 +1,14 @@
+<nav class="pagination" aria-label="Pagination">
+    <button type="button" class="page-control" [disabled]="currentPage <= 1"
+        (click)="selectPage(currentPage - 1)">Previous</button>
+    <div class="page-numbers">
+        @for (page of pages; track page) {
+        <button type="button" class="page-number" [class.active]="page === currentPage"
+            [attr.aria-current]="page === currentPage ? 'page' : null" (click)="selectPage(page)">
+            {{ page }}
+        </button>
+        }
+    </div>
+    <button type="button" class="page-control" [disabled]="currentPage >= totalPages"
+        (click)="selectPage(currentPage + 1)">Next</button>
+</nav>

@@ -1,23 +1,16 @@
 <div class="add-employee-container">
 
     <!-- Header & Breadcrumbs Section -->
-    <div class="header-row">
-        <div class="header-title-box">
-            <div class="breadcrumb">
-                <span>Employees</span> / <span class="active">Add Employee</span>
-            </div>
-            <h1 class="page-title">Add Employee</h1>
-        </div>
+    <app-page-header title="Add Employee" breadcrumb="Employees"></app-page-header>
 
-        <!-- Success Toast Notification -->
-        <!-- @if (showSuccessBanner()) {
+    <!-- Success Toast Notification -->
+    <!-- @if (showSuccessBanner()) {
         <div class="success-banner">
             <span class="icon-check">✓</span>
             <span class="banner-text">Employee created successfully.</span>
             <button type="button" class="close-btn" (click)="dismissBanner()">×</button>
         </div>
         } -->
-    </div>
 
     <!-- Main Form Card -->
     <div class="card form-card">
@@ -36,22 +29,14 @@
                 </div> -->
 
                 <div class="form-group">
-                    <label>Employee Name</label>
-                    <input type="text" formControlName="employeeName" placeholder="Full Name" class="form-control"
-                        [class.is-invalid]="isFieldInvalid('employeeName')" />
-                    @if (hasError('employeeName', 'required')) {
-                    <span class="error-msg">Employee Name is required.</span>
-                    }
+                    <app-input label="Employee Name" placeholder="Full Name" [required]="true"
+                        formControlName="employeeName"></app-input>
                 </div>
 
                 <!-- Row 2: Email & Phone Number -->
                 <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" formControlName="email" placeholder="name@hdfc.com" class="form-control"
-                        [class.is-invalid]="isFieldInvalid('email')" />
-                    @if (hasError('email', 'email') || hasError('email', 'required')) {
-                    <span class="error-msg">Invalid email format.</span>
-                    }
+                    <app-input label="Email" placeholder="name@hdfc.com" type="email" [required]="true"
+                        formControlName="email"></app-input>
                 </div>
 
                 <div class="form-group">
@@ -62,32 +47,20 @@
                             class="form-control pl-12" [class.is-invalid]="isFieldInvalid('phone')" />
                     </div>
                     @if (isFieldInvalid('phone')) {
-                    <span class="error-msg">Invalid phone number.</span>
+                    <app-form-error message="Invalid phone number."></app-form-error>
                     }
                 </div>
 
                 <!-- Row 3: Department & Designation -->
                 <div class="form-group">
-                    <label>Department</label>
-                    <select formControlName="department" class="form-control"
-                        [class.is-invalid]="isFieldInvalid('department')">
-                        <option value="" disabled selected>Select Department...</option>
-                        @for (dept of departments; track dept) {
-                        <option [value]="dept">{{ dept }}</option>
-                        }
-                    </select>
-                    @if (hasError('department', 'required')) {
-                    <span class="error-msg">Department is required.</span>
-                    }
+                    <app-select-component label="Department" placeholder="Select Department..."
+                        [options]="departmentOptions" [required]="true" formControlName="department">
+                    </app-select-component>
                 </div>
 
                 <div class="form-group">
-                    <label>Designation</label>
-                    <input type="text" formControlName="designation" placeholder="Role Title" class="form-control"
-                        [class.is-invalid]="isFieldInvalid('designation')" />
-                    @if (hasError('designation', 'required')) {
-                    <span class="error-msg">Designation is required.</span>
-                    }
+                    <app-input label="Designation" placeholder="Role Title" [required]="true"
+                        formControlName="designation"></app-input>
                 </div>
 
                 <!-- Row 4: Date of Joining & Salary -->
@@ -96,9 +69,9 @@
                     <input type="date" formControlName="dateOfJoining" class="form-control"
                         [class.is-invalid]="isFieldInvalid('dateOfJoining')" />
                     @if (hasError('dateOfJoining', 'futureDate')) {
-                    <span class="error-msg">Date cannot be in the future.</span>
+                    <app-form-error message="Date cannot be in the future."></app-form-error>
                     } @else if (hasError('dateOfJoining', 'required')) {
-                    <span class="error-msg">Date of joining is required.</span>
+                    <app-form-error message="Date of joining is required."></app-form-error>
                     }
                 </div>
 
@@ -110,7 +83,7 @@
                             [class.is-invalid]="isFieldInvalid('salary')" />
                     </div>
                     @if (isFieldInvalid('salary')) {
-                    <span class="error-msg">Salary must be a positive number.</span>
+                    <app-form-error message="Salary must be a positive number."></app-form-error>
                     }
                 </div>
 
@@ -132,12 +105,8 @@
             </div>
 
             <!-- Form Actions -->
-            <div class="form-actions">
-                <button type="button" (click)="onCancel()" class="btn btn-cancel">Cancel</button>
-                <button type="submit" [disabled]="isSubmitting()" class="btn btn-submit">
-                    {{ isSubmitting() ? 'Saving...' : 'Save Employee' }}
-                </button>
-            </div>
+            <app-form-actions submitLabel="Save Employee" [busy]="isSubmitting()"
+                (cancelled)="onCancel()"></app-form-actions>
 
         </form>
     </div>

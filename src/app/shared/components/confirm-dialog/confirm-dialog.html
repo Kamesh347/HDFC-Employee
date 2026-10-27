@@ -1,1 +1,15 @@
-<p>confirm-dialog works!</p>
+<div class="dialog-backdrop" (click)="cancelled.emit()">
+    <section class="dialog" role="alertdialog" aria-modal="true" [attr.aria-label]="title"
+        (click)="$event.stopPropagation()">
+        <h2 class="dialog-title">{{ title }}</h2>
+        <p class="dialog-message">{{ message }}</p>
+        <div class="dialog-actions">
+            <button type="button" class="cancel-button" [disabled]="busy" (click)="cancelled.emit()">
+                {{ cancelLabel }}
+            </button>
+            <button type="button" class="confirm-button" [disabled]="busy" (click)="confirmed.emit()">
+                {{ busy ? 'Please wait...' : confirmLabel }}
+            </button>
+        </div>
+    </section>
+</div>

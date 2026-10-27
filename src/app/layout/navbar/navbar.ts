@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { Auth } from '../../core/services/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -8,7 +8,7 @@ import { Auth } from '../../core/services/auth';
   styleUrl: './navbar.scss',
 })
 export class Navbar {
-  private authService = inject(Auth);
+  private router = inject(Router);
 
   showDropdown = signal<boolean>(false);
   userName = signal<string>('Kamesh Dongre');
@@ -19,6 +19,7 @@ export class Navbar {
   }
 
   logout(): void {
-    // this.authService.logout();
+    this.showDropdown.set(false);
+    this.router.navigate(['/Login']);
   }
 }

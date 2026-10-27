@@ -1,1 +1,9 @@
-<p>stat-card works!</p>
+<article class="stat-card" [class.dashboard-card]="variant === 'dashboard'" [class.summary-card]="variant === 'summary'"
+    [class.tone-positive]="tone === 'positive'" [class.tone-negative]="tone === 'negative'"
+    [class.tone-accent]="tone === 'accent'" [class.tone-neutral]="tone === 'neutral'">
+    <div class="stat-icon"><ng-content select="[statIcon]"></ng-content></div>
+    <div class="stat-copy">
+        <span class="stat-label">{{ label }}</span>
+        <strong class="stat-value"><ng-content select="[statValue]"></ng-content>{{ value }}</strong>
+    </div>
+</article>

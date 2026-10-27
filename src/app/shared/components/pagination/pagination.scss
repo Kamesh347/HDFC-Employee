@@ -1,0 +1,45 @@
+:host {
+  display: block;
+}
+
+.pagination,
+.page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.pagination {
+  justify-content: flex-end;
+  margin-top: 1.25rem;
+}
+
+.page-control,
+.page-number {
+  display: inline-grid;
+  min-width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #334155;
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.page-control {
+  padding: 0 0.75rem;
+}
+
+.page-number.active {
+  border-color: #1e293b;
+  background: #1e293b;
+  color: #ffffff;
+}
+
+.page-control:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

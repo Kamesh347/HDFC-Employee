@@ -1,11 +1,26 @@
 import { Component, inject, signal } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../../core/services/api-service';
+import {
+  SelectComponent,
+  SelectOption,
+} from '../../../../shared/components/select-component/select-component';
+import { PageHeader } from '../../../../shared/components/page-header/page-header';
+import { FormError } from '../../../../shared/components/form-error/form-error';
+import { InputComponent } from '../../../../shared/components/input/input-component';
+import { FormActions } from '../../../../shared/components/form-actions/form-actions';
 
 @Component({
   selector: 'app-add-income',
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [
+    ReactiveFormsModule,
+    SelectComponent,
+    PageHeader,
+    FormError,
+    InputComponent,
+    FormActions,
+  ],
   templateUrl: './add-income.html',
   styleUrl: './add-income.scss',
 })
@@ -22,10 +37,21 @@ export class AddIncome {
     { id: 'emp002', name: 'Anish Sharma' },
     { id: 'emp003', name: 'Priya Verma' },
   ]);
+  employeeOptions: SelectOption[] = this.employees().map((employee) => ({
+    value: employee.id,
+    label: `${employee.name} (${employee.id})`,
+  }));
 
   incomeCategories = ['Salary', 'Bonus', 'Incentive', 'Investment', 'Freelance', 'Other'];
   paymentMethods = ['Bank Transfer', 'Cash', 'UPI', 'Other'];
-
+  categoryOptions: SelectOption[] = this.incomeCategories.map((category) => ({
+    value: category,
+    label: category,
+  }));
+  paymentMethodOptions: SelectOption[] = this.paymentMethods.map((method) => ({
+    value: method,
+    label: method,
+  }));
   // Form Setup with Validations
   incomeForm = this.fb.group({
     employeeId: ['', [Validators.required]],
@@ -71,12 +97,5 @@ export class AddIncome {
 
   onCancel(): void {
     this.router.navigate(['/dashboard']);
-  }
-
-  selectedEmpId() {}
-
-
-  searchEmpNameId(){
-    
   }
 }

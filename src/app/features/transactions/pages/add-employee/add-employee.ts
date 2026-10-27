@@ -8,10 +8,25 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../../core/services/api-service';
+import {
+  SelectComponent,
+  SelectOption,
+} from '../../../../shared/components/select-component/select-component';
+import { PageHeader } from '../../../../shared/components/page-header/page-header';
+import { FormError } from '../../../../shared/components/form-error/form-error';
+import { InputComponent } from '../../../../shared/components/input/input-component';
+import { FormActions } from '../../../../shared/components/form-actions/form-actions';
 
 @Component({
   selector: 'app-add-employee',
-  imports: [ReactiveFormsModule],
+  imports: [
+    ReactiveFormsModule,
+    SelectComponent,
+    PageHeader,
+    FormError,
+    InputComponent,
+    FormActions,
+  ],
   templateUrl: './add-employee.html',
   styleUrl: './add-employee.scss',
 })
@@ -25,6 +40,10 @@ export class AddEmployee {
   showSuccessBanner = signal<boolean>(true); // Controlled by notification response
 
   departments = ['IT', 'HR', 'Operations', 'Finance', 'Marketing'];
+  departmentOptions: SelectOption[] = this.departments.map((department) => ({
+    value: department,
+    label: department,
+  }));
 
   // Custom Validator to prevent future dates
   noFutureDateValidator(control: AbstractControl): ValidationErrors | null {

@@ -2,11 +2,15 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { InputComponent } from '../../../../shared/components/input/input-component';
-import { SelectComponent } from '../../../../shared/components/select-component/select-component';
+import {
+  SelectComponent,
+  SelectOption,
+} from '../../../../shared/components/select-component/select-component';
+import { PageHeader } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-add-expense',
-  imports: [ReactiveFormsModule, InputComponent, SelectComponent],
+  imports: [ReactiveFormsModule, InputComponent, SelectComponent, PageHeader],
   templateUrl: './add-expense.html',
   styleUrl: './add-expense.scss',
 })
@@ -32,6 +36,10 @@ export class AddExpense {
     'Medical',
     'Other',
   ];
+  expenseCategoryOptions: SelectOption[] = this.expenseCategories.map((category) => ({
+    value: category,
+    label: category,
+  }));
   paymentMethods = ['Corporate Credit Card', 'Bank Transfer', 'Petty Cash', 'UPI', 'Reimbursement'];
 
   // Form Setup with Validations
@@ -43,7 +51,7 @@ export class AddExpense {
     amount: [0, [Validators.required, Validators.min(0.01)]],
     expenseDate: ['', [Validators.required]],
     paymentMethod: ['', [Validators.required]],
-    description: ['']
+    description: [''],
   });
 
   isFieldInvalid(fieldName: string): boolean {

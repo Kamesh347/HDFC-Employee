@@ -1,12 +1,6 @@
 <div class="add-expense-container">
 
-  <!-- Breadcrumb & Header -->
-  <div class="page-header">
-    <div class="breadcrumb">
-      <span>Expenses</span> / <span class="active">Add Expense</span>
-    </div>
-    <h1 class="page-title">Add Expense</h1>
-  </div>
+  <app-page-header title="Add Expense" breadcrumb="Expenses"></app-page-header>
 
   <!-- Form Card Container -->
   <div class="card form-card">
@@ -23,7 +17,7 @@
       helperText="we will never share your eamil" formControlName="email"></app-input>
 
     <app-select-component label="Expense Category " placeholder="Select the category" helperText="It not be null "
-      formControlName="selectedCategory"></app-select-component>
+      [options]="expenseCategoryOptions" formControlName="selectedCategory"></app-select-component>
 
   </div>
 

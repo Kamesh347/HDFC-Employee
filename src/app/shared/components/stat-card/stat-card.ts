@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-stat-card',
@@ -7,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrl: './stat-card.scss',
 })
 export class StatCard {
-
+  @Input() label = '';
+  @Input() value: string | number | null = '';
+  @Input() tone: 'neutral' | 'positive' | 'negative' | 'accent' = 'neutral';
+  @Input() variant: 'dashboard' | 'summary' = 'dashboard';
 }

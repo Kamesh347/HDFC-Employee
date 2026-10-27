@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Optional, Self } from '@angular/core';
-import { NgControl } from '@angular/forms';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 export interface SelectOption {
-  value: any;
-  lable: String;
+  value: string | number;
+  label: string;
   disabled?: boolean;
-  label : String
 }
 
 @Component({
@@ -15,7 +14,7 @@ export interface SelectOption {
   templateUrl: './select-component.html',
   styleUrl: './select-component.scss',
 })
-export class SelectComponent {
+export class SelectComponent implements ControlValueAccessor {
   @Input() label: string = '';
   @Input() placeholder: string = 'Select an option';
   @Input() options: SelectOption[] = [];
@@ -23,9 +22,11 @@ export class SelectComponent {
   @Input() disabled: boolean = false;
   @Input() required: boolean = false;
 
-  selectedValue: any = '';
+  selectedValue: string | number = '';
+  searchText = '';
+  isOpen = false;
 
-  onChange: (value: any) => void = () => {};
+  onChange: (value: string | number) => void = () => {};
   onTouched: () => void = () => {};
 
   constructor(@Optional() @Self() public ngControl: NgControl) {
@@ -37,9 +38,10 @@ export class SelectComponent {
   // ControlValueAccessor Interface Implementation
   writeValue(val: any): void {
     this.selectedValue = val ?? '';
+    this.searchText = this.selectedOption?.label ?? '';
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: string | number) => void): void {
     this.onChange = fn;
   }
 
@@ -49,15 +51,57 @@ export class SelectComponent {
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
+    if (isDisabled) this.isOpen = false;
   }
 
-  onSelectionChange(event: Event): void {
-    const val = (event.target as HTMLSelectElement).value;
-    this.selectedValue = val;
-    this.onChange(this.selectedValue);
+  get filteredOptions(): SelectOption[] {
+    const query = this.searchText.trim().toLocaleLowerCase();
+    return query
+      ? this.options.filter((option) => option.label.toLocaleLowerCase().includes(query))
+      : this.options;
   }
 
-  onBlur(): void {
+  get selectedOption(): SelectOption | undefined {
+    return this.options.find((option) => option.value === this.selectedValue);
+  }
+
+  onFocus(): void {
+    if (this.disabled) return;
+    this.searchText = '';
+    this.isOpen = true;
+  }
+
+  onSearch(event: Event): void {
+    this.searchText = (event.target as HTMLInputElement).value;
+    this.isOpen = true;
+  }
+
+  selectOption(option: SelectOption): void {
+    if (option.disabled) return;
+    this.selectedValue = option.value;
+    this.searchText = option.label;
+    this.isOpen = false;
+    this.onChange(option.value);
+    this.onTouched();
+  }
+
+  onKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Escape') {
+      this.isOpen = false;
+      this.searchText = this.selectedOption?.label ?? '';
+    } else if (event.key === 'Enter' && this.isOpen && this.filteredOptions.length) {
+      event.preventDefault();
+      this.selectOption(this.filteredOptions[0]);
+    } else if (event.key === 'ArrowDown') {
+      this.isOpen = true;
+    }
+  }
+
+  onFocusOut(event: FocusEvent): void {
+    const nextTarget = event.relatedTarget as Node | null;
+    if (nextTarget && (event.currentTarget as HTMLElement).contains(nextTarget)) return;
+    this.isOpen = false;
+    this.searchText = this.selectedOption?.label ?? '';
     this.onTouched();
   }
 

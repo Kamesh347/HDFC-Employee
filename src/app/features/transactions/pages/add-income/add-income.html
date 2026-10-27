@@ -1,12 +1,6 @@
 <div class="add-income-container">
-  
-  <!-- Breadcrumb & Header -->
-  <div class="page-header">
-    <div class="breadcrumb">
-      <span>Income</span> / <span class="active">Add Income</span>
-    </div>
-    <h1 class="page-title">Add Income</h1>
-  </div>
+
+  <app-page-header title="Add Income" breadcrumb="Income"></app-page-header>
 
 
 
@@ -17,71 +11,26 @@
     <form [formGroup]="incomeForm" (ngSubmit)="onSubmit()" class="income-form">
 
 
-         <div class="filter-group search-group">
-        <div class="input-relative">
-          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-          <input type="text" [ngModel]="searchEmpNameId()" 
-            placeholder="Search employee" class="filter-input pl-8" />
-        </div>
-      </div>
-
-
-       <div class="filter-group">
-        <label>Employee ID filter</label>
-        <select [ngModel]="selectedEmpId()" 
-          class="filter-select">
-          <option value="All">Employee ID filter</option>
-          <option value="EMP001">EMP001</option>
-          <option value="EMP002">EMP002</option>
-          <option value="EMP003">EMP003</option>
-        </select>
-      </div>
-      
       <!-- Employee Field -->
       <div class="form-group">
         <label>Employee <span class="required">*</span></label>
-        <select formControlName="employeeId" class="form-control" [class.is-invalid]="isFieldInvalid('employeeId')">
-          <option value="" disabled selected>Select Employee...</option>
-          @for (emp of employees(); track emp.id) {
-            <option [value]="emp.id">{{ emp.name }} ({{ emp.id }})</option>
-          }
-        </select>
-        @if (isFieldInvalid('employeeId')) {
-          <span class="error-msg">Employee is required.</span>
-        }
+        <app-select-component label="Employee" placeholder="Select Employee..." [options]="employeeOptions"
+          [required]="true" formControlName="employeeId">
+        </app-select-component>
       </div>
 
       <!-- Income Source -->
       <div class="form-group">
-        <label>Income Source <span class="required">*</span></label>
-        <input 
-          type="text" 
-          formControlName="incomeSource" 
-          placeholder="e.g., Client Name or Company" 
-          class="form-control" 
-          [class.is-invalid]="isFieldInvalid('incomeSource')"
-        />
-        @if (isFieldInvalid('incomeSource')) {
-          <span class="error-msg">Income source is required.</span>
-        }
+        <app-input label="Income Source" placeholder="e.g., Client Name or Company" [required]="true"
+          formControlName="incomeSource"></app-input>
       </div>
 
       <!-- Income Category -->
       <div class="form-group">
         <label>Income Category <span class="required">*</span></label>
-        <select formControlName="category" class="form-control" [class.is-invalid]="isFieldInvalid('category')">
-          <option value="" disabled selected>Select category...</option>
-          @for (cat of incomeCategories; track cat) {
-            <option [value]="cat">{{ cat }}</option>
-          }
-        </select>
-        @if (isFieldInvalid('category')) {
-          <span class="error-msg">Category is required.</span>
-        }
+        <app-select-component label="Income Category" placeholder="Select category..." [options]="categoryOptions"
+          [required]="true" formControlName="category">
+        </app-select-component>
       </div>
 
       <!-- Amount -->
@@ -89,65 +38,41 @@
         <label>Amount <span class="required">*</span></label>
         <div class="currency-input-wrapper">
           <span class="currency-symbol">₹</span>
-          <input 
-            type="number" 
-            formControlName="amount" 
-            placeholder="0.00" 
-            class="form-control pl-8" 
-            [class.is-invalid]="isFieldInvalid('amount')"
-          />
+          <input type="number" formControlName="amount" placeholder="0.00" class="form-control pl-8"
+            [class.is-invalid]="isFieldInvalid('amount')" />
         </div>
         @if (isFieldInvalid('amount')) {
-          <span class="error-msg">Amount must be greater than zero.</span>
+        <app-form-error message="Amount must be greater than zero."></app-form-error>
         }
       </div>
 
       <!-- Income Date -->
       <div class="form-group">
         <label>Income Date <span class="required">*</span></label>
-        <input 
-          type="date" 
-          formControlName="incomeDate" 
-          class="form-control" 
-          [class.is-invalid]="isFieldInvalid('incomeDate')"
-        />
+        <input type="date" formControlName="incomeDate" class="form-control"
+          [class.is-invalid]="isFieldInvalid('incomeDate')" />
         @if (isFieldInvalid('incomeDate')) {
-          <span class="error-msg">Date is required.</span>
+        <app-form-error message="Date is required."></app-form-error>
         }
       </div>
 
       <!-- Payment Method -->
       <div class="form-group">
         <label>Payment Method <span class="required">*</span></label>
-        <select formControlName="paymentMethod" class="form-control" [class.is-invalid]="isFieldInvalid('paymentMethod')">
-          <option value="" disabled selected>Select payment method...</option>
-          @for (method of paymentMethods; track method) {
-            <option [value]="method">{{ method }}</option>
-          }
-        </select>
-        @if (isFieldInvalid('paymentMethod')) {
-          <span class="error-msg">Payment method is required.</span>
-        }
+        <app-select-component label="Payment Method" placeholder="Select payment method..."
+          [options]="paymentMethodOptions" [required]="true" formControlName="paymentMethod">
+        </app-select-component>
       </div>
 
       <!-- Description -->
       <div class="form-group">
         <label>Description</label>
-        <textarea 
-          formControlName="description" 
-          rows="3" 
-          placeholder="Add details about the income... (optional)" 
-          class="form-control textarea"
-        ></textarea>
+        <textarea formControlName="description" rows="3" placeholder="Add details about the income... (optional)"
+          class="form-control textarea"></textarea>
       </div>
 
       <!-- Form Action Buttons -->
-      <div class="form-actions">
-        <button type="button" (click)="onCancel()" class="btn btn-cancel">Cancel</button>
-        <button type="submit" [disabled]="isSubmitting()" class="btn btn-submit">
-          {{ isSubmitting() ? 'Saving...' : 'Save Income' }}
-        </button>
-      </div>
+      <app-form-actions submitLabel="Save Income" [busy]="isSubmitting()" (cancelled)="onCancel()"></app-form-actions>
 
     </form>
   </div>

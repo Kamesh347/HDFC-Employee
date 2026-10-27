@@ -4,24 +4,23 @@
     {{ label }} <span *ngIf="required" class="required-asterisk">*</span>
   </label>
 
-  <!-- Dropdown Element -->
-  <div class="select-container">
-    <select
-      [disabled]="disabled"
-      [value]="selectedValue"
-      (change)="onSelectionChange($event)"
-      (blur)="onBlur()"
-      class="form-select"
-    >
-      <option value="" disabled selected hidden>{{ placeholder }}</option>
-      <option 
-        *ngFor="let option of options" 
-        [value]="option.value"
-        [disabled]="option.disabled"
-      >
+  <div class="select-container" (focusout)="onFocusOut($event)">
+    <input type="text" class="form-select" role="combobox" aria-autocomplete="list" aria-haspopup="listbox"
+      [attr.aria-expanded]="isOpen" [attr.aria-required]="required" [attr.aria-invalid]="!!errorMessage"
+      [value]="searchText" [placeholder]="placeholder" [disabled]="disabled" (focus)="onFocus()"
+      (input)="onSearch($event)" (keydown)="onKeydown($event)" />
+    @if (isOpen) {
+    <div class="options-list" role="listbox">
+      @for (option of filteredOptions; track option.value) {
+      <button type="button" class="option-item" role="option" [attr.aria-selected]="option.value === selectedValue"
+        [disabled]="option.disabled" (click)="selectOption(option)">
         {{ option.label }}
-      </option>
-    </select>
+      </button>
+      } @empty {
+      <div class="no-options">No matching options</div>
+      }
+    </div>
+    }
   </div>
 
   <!-- Helper Text / Validation Error -->

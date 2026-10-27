@@ -1,0 +1,16 @@
+<header class="page-header">
+    <div class="heading-copy">
+        @if (breadcrumb) {
+        <div class="breadcrumb">
+            <span>{{ breadcrumb }}</span>
+            <span class="separator" aria-hidden="true">/</span>
+            <span class="current">{{ title }}</span>
+        </div>
+        }
+        <h1 class="page-title">{{ title }}</h1>
+        @if (subtitle) {
+        <p class="page-subtitle">{{ subtitle }}</p>
+        }
+    </div>
+    <div class="header-actions"><ng-content select="[headerActions]"></ng-content></div>
+</header>

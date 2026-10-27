@@ -4,6 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet, RouterLinkWithHref, ActivatedRoute } from '@angular/router';
 import { Sidebar } from '../../../layout/sidebar/sidebar';
 import { Navbar } from '../../../layout/navbar/navbar';
+import {
+  SelectComponent,
+  SelectOption,
+} from '../../../shared/components/select-component/select-component';
+import { StatCard } from '../../../shared/components/stat-card/stat-card';
+import { StatusBadge } from '../../../shared/components/status-badge/status-badge';
 
 export interface Transaction {
   id: string;
@@ -23,7 +29,7 @@ export interface CategoryExpense {
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, FormsModule, RouterOutlet],
+  imports: [CommonModule, FormsModule, RouterOutlet, SelectComponent, StatCard, StatusBadge],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -34,6 +40,11 @@ export class Dashboard {
   ) {}
   // Signals State
   selectedMonth = signal<string>('October 2023');
+  monthOptions: SelectOption[] = [
+    { value: 'October 2023', label: 'October 2023' },
+    { value: 'November 2023', label: 'November 2023' },
+    { value: 'December 2023', label: 'December 2023' },
+  ];
   dateRangeFilter = signal<string>('October 2023');
   isLoading = signal<boolean>(false);
 
